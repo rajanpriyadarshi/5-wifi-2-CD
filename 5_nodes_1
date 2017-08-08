@@ -1,0 +1,268 @@
+Scenario.name = 5_nodes
+Scenario.simulateConnections = true
+Scenario.updateInterval = 0.1
+# 43200s == 12h
+Scenario.endTime = 43200
+Scenario.nrofHostGroups=12
+######################################################################################33
+
+# "Bluetooth" interface for all nodes
+btInterface.type = SimpleBroadcastInterface
+# Transmit speed of 2 Mbps = 250kBps
+btInterface.transmitSpeed = 250k
+btInterface.transmitRange = 10
+
+wifiInterface.type=SimpleBroadcastInterface
+# Transmit speed of 2 Mbps = 250kBps
+wifiInterface.transmitSpeed = 1024k
+wifiInterface.transmitRange = 100000
+
+DBInterface.type = SimpleBroadcastInterface
+DBInterface.transmitSpeed = 256k
+DBInterface.transmitRange = 100
+
+ADBInterface.type = SimpleBroadcastInterface
+ADBInterface.transmitSpeed = 2560k
+ADBInterface.transmitRange = 100
+#######################################################################################################
+
+# Common settings for all groups
+Group.movementModel = ShortestPathMapBasedMovement
+Group.router = EpidemicRouter
+Group.bufferSize = 5M
+Group.waitTime = 0, 120
+# All nodes have the bt interface
+Group.nrofInterfaces = 1
+Group.interface1 = btInterface
+# Walking speeds
+Group.speed = 0.5, 1.5
+# Message TTL of 300 minutes (5 hours)
+Group.msgTtl = 300
+
+Group.nrofHosts = 12
+ExternalMovement.file = extsreya.txt
+################################################################################
+
+
+
+#UNICAST specific settings
+
+Group.mcs_message = N
+# node # of MCS
+Group.mcs_address=14
+Group.firstBT = 15
+Group.firstADB = 5
+Group.firstWIFI=10
+Group.firstCD = 0
+# Tags must be same as the groupID
+Group.bt_tag = p
+Group.cd_tag = CD
+Group.adb_tag = ADB
+Group.wifi_tag = WIFI
+Group.stage1 = 64800
+Group.nodespc = 10
+Group.nrofHosts = 12 
+Group.clusterWifi = 1,2
+Group.group_centers = 1,2
+Group.DMS = 1
+Group.cd1 = 1,2
+# Starting and ending times of each warmup duration
+Group.stage_warmups = 0, 5000 , 64800 , 73400, 133200
+
+
+
+#################################################################################
+#Centre
+Group1.groupID = DB
+Group1.nrofHosts = 5
+Group1.movementModel = ExternalMovement
+Group1.nrofInterfaces = 1
+Group1.interface1 = DBInterface
+###################################################################################
+##ActualDropBox
+Group2.groupID = ADB
+Group2.nrofHosts = 5
+Group2.movementModel = ExternalMovement
+Group2.nrofInterfaces = 2
+Group2.interface1 = ADBInterface
+Group2.interface2 = btInterface
+####################################################################################
+
+##############################--1--#####################################################
+
+#1
+Group3.groupID = WIFI_
+Group3.nrofHosts = 1
+Group3.movementModel =ExternalMovement
+Group3.nrofInterfaces = 2
+Group3.interface1 = wifiInterface
+Group3.interface2 = ADBInterface
+Group3.activeTimes = 0,133200
+################################--2--###################################################
+#2
+Group4.groupID = WIFI_
+Group4.nrofHosts = 1
+Group4.movementModel = ExternalMovement
+Group4.nrofInterfaces = 2
+Group4.interface1 = wifiInterface
+Group4.interface2 = ADBInterface
+Group4.activeTimes = 0,133200
+
+###################################--3--##############################################
+
+#3
+Group5.groupID = WIFI_
+Group5.nrofHosts = 1
+Group5.movementModel = ExternalMovement
+Group5.nrofInterfaces = 2
+Group5.interface1 = wifiInterface
+Group5.interface2 = ADBInterface
+Group5.activeTimes = 0,133200
+
+#################################--4--##########################################################
+
+#4
+Group6.groupID = WIFI_
+Group6.nrofHosts = 1
+Group6.movementModel = ExternalMovement
+Group6.nrofInterfaces = 2
+Group6.interface1 = wifiInterface
+Group6.interface2 = ADBInterface
+Group6.activeTimes = 0,133200
+
+#######################################--5--#####################################################
+
+#5
+Group7.groupID = WIFI_
+Group7.nrofHosts = 1
+Group7.movementModel = ExternalMovement
+Group7.nrofInterfaces = 2
+Group7.interface1 = wifiInterface
+Group7.interface2 = ADBInterface
+Group7.activeTimes = 0,133200
+
+##########################################################################################################
+#Cluster1`
+	Group8.clusterCenter = 398,98
+	Group8.dblocation = 398,98
+	Group8.groupID = p1_
+	Group8.nrofHosts = 10
+        Group8.movementModel = ClusterMovement
+	Group8.interface1 = btInterface
+	Group8.activeTimes = 0,133200
+#Cluster2
+	Group9.clusterCenter = 598,98
+	Group9.dblocation = 598,98
+	Group9.groupID = p2_
+	Group9.nrofHosts = 10
+        Group9.movementModel = ClusterMovement
+	Group9.interface1 = btInterface
+	Group9.activeTimes = 0,133200
+#Cluster3
+	Group10.clusterCenter = 398, 598
+	Group10.dblocation = 398, 598
+	Group10.groupID = p3_
+	Group10.nrofHosts = 10
+        Group10.movementModel = ClusterMovement
+	Group10.interface1 = btInterface
+	Group10.activeTimes = 0,133200
+#Cluster4
+	Group11.clusterCenter = 598,598
+	Group11.dblocation = 598,598
+	Group11.groupID = p4_
+	Group11.nrofHosts = 10
+        Group11.movementModel = ClusterMovement
+	Group11.interface1 = btInterface
+	Group11.activeTimes = 0,133200
+
+#Cluster5
+	Group12.clusterCenter = 498,798
+	Group12.dblocation = 498,798
+	Group12.groupID = p4_
+	Group12.nrofHosts = 10
+        Group12.movementModel = ClusterMovement
+	Group12.interface1 = btInterface
+	Group12.activeTimes = 0,133200
+
+###################################################################################
+
+
+## Message creation parameters 
+# How many event generators
+Events.nrof = 1
+# Class of the first event generator
+Events1.class = MessageEventGenerator
+# (following settings are specific for the MessageEventGenerator class)
+# Creation interval in seconds (one new message every 25 to 35 seconds)
+Events1.interval = 25,35
+# Message sizes (500kB - 1MB)
+Events1.size = 500k,1M
+# range of message source/destination addresses
+Events1.hosts = 15,64
+# Message ID prefix
+Events1.prefix = M
+
+
+## Movement model settings
+# seed for movement models' pseudo random number generator (default = 0)
+MovementModel.rngSeed = 1
+# World's size for Movement Models without implicit size (width, height; meters)
+MovementModel.worldSize = 4500, 3400
+# How long time to move hosts in the world before real simulation
+MovementModel.warmup = 1000
+
+## Map based movement -movement model specific settings
+MapBasedMovement.nrofMapFiles = 4
+
+MapBasedMovement.mapFile1 = data/roads.wkt
+MapBasedMovement.mapFile2 = data/main_roads.wkt
+MapBasedMovement.mapFile3 = data/pedestrian_paths.wkt
+MapBasedMovement.mapFile4 = data/shops.wkt
+
+## Reports - all report names have to be valid report classes
+
+# how many reports to load
+Report.nrofReports = 1
+# length of the warm up period (simulated seconds)
+Report.warmup = 0
+# default directory of reports (can be overridden per Report with output setting)
+Report.reportDir = reports/
+# Report classes to load
+Report.report1 = MessageStatsReport
+
+## Default settings for some routers settings
+ProphetRouter.secondsInTimeUnit = 30
+SprayAndWaitRouter.nrofCopies = 6
+SprayAndWaitRouter.binaryMode = true
+
+## Optimization settings -- these affect the speed of the simulation
+## see World class for details.
+Optimization.cellSizeMult = 5
+Optimization.randomizeUpdateOrder = true
+
+
+## GUI settings
+
+# GUI underlay image settings
+GUI.UnderlayImage.fileName = data/helsinki_underlay.png
+# Image offset in pixels (x, y)
+GUI.UnderlayImage.offset = 64, 20
+# Scaling factor for the image
+GUI.UnderlayImage.scale = 4.75
+# Image rotation (radians)
+GUI.UnderlayImage.rotate = -0.015
+
+# how many events to show in the log panel (default = 30)
+GUI.EventLogPanel.nrofEvents = 100
+# Regular Expression log filter (see Pattern-class from the Java API for RE-matching details)
+#GUI.EventLogPanel.REfilter = .*p[1-9]<->p[1-9]$
+
+
+
+
+
+
+
+
+
+
